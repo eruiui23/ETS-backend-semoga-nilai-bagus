@@ -2,9 +2,11 @@ package main
 
 import (
 	"encoding/json"
+	"errors"
 	"net/http"
 	"strconv"
 	"strings"
+	"time"
 )
 
 // Handler mengelola semua endpoint HTTP untuk PinjamKampus API.
@@ -41,6 +43,8 @@ func (h *Handler) RegisterRoutes(mux *http.ServeMux) {
 	mux.HandleFunc("POST /sumber-daya", h.CreateSumberDaya)
 	mux.HandleFunc("GET /sumber-daya", h.ListSumberDaya)
 	mux.HandleFunc("GET /sumber-daya/{id}", h.GetSumberDayaByID)
+
+	mux.HandleFunc("POST /peminjaman", h.CreatePeminjaman)
 }
 
 // CreateSumberDaya menangani pembuatan sumber daya baru (B1).
@@ -96,4 +100,79 @@ func (h *Handler) GetSumberDayaByID(w http.ResponseWriter, r *http.Request) {
 	}
 
 	writeJSON(w, http.StatusOK, sd)
+}
+
+// CreatePeminjaman menangani pembuatan peminjaman baru (B2).
+func (h *Handler) CreatePeminjaman(w http.ResponseWriter, r *http.Request) {
+	var req Peminjaman
+	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
+		writeError(w, http.StatusBadRequest, "format JSON tidak valid")
+		return
+	}
+
+	// 1. Validasi keberadaan sumber_daya_id
+	if req.SumberDayaID <= 0 {
+		writeError(w, http.StatusBadRequest, "sumber_daya_id harus berupa angka positif")
+		return
+	}
+	sd, exists := h.storage.GetSumberDaya(req.SumberDayaID)
+	if !exists {
+		writeError(w, http.StatusNotFound, "sumber daya tidak ditemukan")
+		return
+	}
+
+	// 2. Validasi peminjam
+	req.Peminjam = strings.TrimSpace(req.Peminjam)
+	if req.Peminjam == "" || len(req.Peminjam) > 50 {
+		writeError(w, http.StatusBadRequest, "peminjam wajib diisi dan maksimal 50 karakter")
+		return
+	}
+
+	// 3. Validasi tanggal format YYYY-MM-DD
+	if _, err := time.Parse("2006-01-02", req.Tanggal); err != nil {
+		writeError(w, http.StatusBadRequest, "tanggal harus dalam format YYYY-MM-DD yang valid")
+		return
+	}
+
+	// 4. Validasi slot_mulai dan slot_selesai (1-8, selesai >= mulai)
+	if req.SlotMulai < 1 || req.SlotMulai > 8 {
+		writeError(w, http.StatusBadRequest, "slot_mulai harus di antara 1 sampai 8")
+		return
+	}
+	if req.SlotSelesai < 1 || req.SlotSelesai > 8 {
+		writeError(w, http.StatusBadRequest, "slot_selesai harus di antara 1 sampai 8")
+		return
+	}
+	if req.SlotSelesai < req.SlotMulai {
+		writeError(w, http.StatusBadRequest, "slot_selesai harus lebih besar atau sama dengan slot_mulai")
+		return
+	}
+
+	// 5. Validasi jumlah (1 sampai stok sumber daya)
+	if req.Jumlah < 1 || req.Jumlah > sd.Stok {
+		writeError(w, http.StatusBadRequest, "jumlah harus antara 1 sampai stok sumber daya")
+		return
+	}
+
+	// 6. Default status: "aktif"
+	if strings.TrimSpace(req.Status) == "" {
+		req.Status = "aktif"
+	}
+
+	// 7. Simpan peminjaman & cek deteksi bentrok (409)
+	created, err := h.storage.CreatePeminjaman(req)
+	if err != nil {
+		if errors.Is(err, ErrConflict) {
+			writeError(w, http.StatusConflict, "jadwal bentrok pada slot waktu yang dipilih")
+			return
+		}
+		if errors.Is(err, ErrNotFound) {
+			writeError(w, http.StatusNotFound, "sumber daya tidak ditemukan")
+			return
+		}
+		writeError(w, http.StatusBadRequest, err.Error())
+		return
+	}
+
+	writeJSON(w, http.StatusCreated, created)
 }

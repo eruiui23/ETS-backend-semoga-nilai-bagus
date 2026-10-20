@@ -20,6 +20,12 @@ Log yang jujur tidak mengurangi nilai, sebanyak apa pun AI dipakai. Yang mengura
 - diubah : models.go 
 
 ## mengerjakan kebutuhan wajib B1 kelola sumber daya
-- prompt : aturan aturan yang ada di req.md
+- prompt : mengerjakan B1 sesuai aturan aturan yang ada di req.md
+- dipakai : file readme mengenai fitur B1
+- diubah : models definisi struct, handler menambah fungsi dan enpoint , main, storage auto increment id
+
+
+## mengerjakan kebutuhan wajib B2 Buat peminjaman
+- prompt : mengerjakan B2 sesuai aturan aturan yang ada di req.md
 - dipakai : file readme mengenai fitur B1
 - diubah : models definisi struct, handler menambah fungsi dan enpoint , main, storage auto increment id
