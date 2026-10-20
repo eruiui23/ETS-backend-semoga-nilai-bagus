@@ -49,4 +49,8 @@ type Handler struct {
 - Penyebab dan solusi:
 
 ## 5. Change request
-(Apa yang diminta, bagian kode mana yang kamu ubah, dan satu keputusan desain yang kamu ambil.)
+- **Apa yang diminta:** Bagian audit meminta agar data peminjaman tidak boleh hilang saat dihapus. Endpoint `DELETE /peminjaman/{id}` diubah menjadi pembatalan (*soft delete*) dengan mengubah status menjadi `"dibatalkan"`, mengembalikan status `204 No Content`, dan menghasilkan `409 Conflict` jika peminjaman sudah berstatus dibatalkan. Peminjaman yang dibatalkan tidak boleh menahan slot.
+- **Bagian kode mana yang kamu ubah:** 
+  1. Method `DeletePeminjaman` di `handler.go`: mengubah aksi dari menghapus elemen slice menjadi hanya mengupdate field `Status` menjadi `"dibatalkan"` serta menambahkan validasi konflik status 409 jika status sudah `"dibatalkan"`.
+  2. Logika `isBentrok` dan `GetKetersediaan` di `handler.go`: memastikan hanya peminjaman dengan `Status == "aktif"` yang menahan slot dan dihitung kuotanya.
+- **Satu keputusan desain yang diambil:** Menerapkan *soft delete* langsung pada slice peminjaman tanpa memindahkan data ke tabel/slice arsip terpisah, sehingga endpoint `GET /peminjaman` dan filter `?status=dibatalkan` dapat langsung membaca data secara terpadu tanpa kompleksitas *querying* lintas koleksi.

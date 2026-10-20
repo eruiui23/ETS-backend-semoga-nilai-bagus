@@ -19,17 +19,3 @@ type Peminjaman struct {
 	Jumlah       int    `json:"jumlah"`
 	Status       string `json:"status"`
 }
-
-// SlotKetersediaan merepresentasikan status kuota ketersediaan pada satu slot.
-type SlotKetersediaan struct {
-	Slot     int  `json:"slot"`
-	Sisa     int  `json:"sisa"`
-	Tersedia bool `json:"tersedia"`
-}
-
-// KetersediaanResponse adalah respons untuk endpoint ketersediaan Persona A.
-type KetersediaanResponse struct {
-	SumberDayaID int                `json:"sumber_daya_id"`
-	Tanggal      string             `json:"tanggal"`
-	Slot         []SlotKetersediaan `json:"slot"`
-}

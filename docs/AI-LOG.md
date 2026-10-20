@@ -24,8 +24,12 @@ Log yang jujur tidak mengurangi nilai, sebanyak apa pun AI dipakai. Yang mengura
 - dipakai : file readme mengenai fitur B1
 - diubah : models definisi struct, handler menambah fungsi dan enpoint , main, storage auto increment id
 
-
 ## mengerjakan kebutuhan wajib B2 Buat peminjaman
 - prompt : mengerjakan B2 sesuai aturan aturan yang ada di req.md
 - dipakai : file readme mengenai fitur B1
 - diubah : models definisi struct, handler menambah fungsi dan enpoint , main, storage auto increment id
+
+## Simplifikasi arsitektur & Change Request C
+- prompt : simplifikasi backend, implementasi Change Request C data peminjaman tidak boleh hilang, dan fitur Persona A
+- dipakai : handler.go, utils.go, models.go, PROSES.md
+- diubah : menghapus storage.go dan menggantinya dengan in-memory slice di struct Handler; mengimplementasikan soft delete pada DELETE /peminjaman/{id} (status "dibatalkan", 204, dan 409 jika sudah batal); kalkulasi slot on-the-fly pada Persona A
