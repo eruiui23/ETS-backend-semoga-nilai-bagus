@@ -33,3 +33,18 @@ Log yang jujur tidak mengurangi nilai, sebanyak apa pun AI dipakai. Yang mengura
 - prompt : simplifikasi backend, implementasi Change Request C data peminjaman tidak boleh hilang, dan fitur Persona A
 - dipakai : handler.go, utils.go, models.go, PROSES.md
 - diubah : menghapus storage.go dan menggantinya dengan in-memory slice di struct Handler; mengimplementasikan soft delete pada DELETE /peminjaman/{id} (status "dibatalkan", 204, dan 409 jika sudah batal); kalkulasi slot on-the-fly pada Persona A
+
+## memastikan paakah b3 sudah selsai atau belum
+- prompt : jadi apakah b3 sudah selesai
+- dipakai : - 
+- diubah : ai menjaawab sudah selesai bahkan sampai ke b-7
+
+## jelaskan b4, b5, b6, b7 
+- prompt : coba kasi tau jelasin bagian mana b4, b5, b6, b7 pada kode
+- dipakai : handler
+- diubah : ai menjelasakan kode yang mana merupakan bagian yang mana
+
+## test di bruno / postman
+- prompt :  kalo uda ini gimana cara gw bisa test langsung di postman/ bruno?
+- dipakai : - 
+- diubah : ai menjelaskan bagaimana cara test menggunakan bruno
