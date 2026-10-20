@@ -4,6 +4,7 @@
 seorang petugas gedung yang bertanggung jawab atas ketersediaan suatu ruangan. Biasanya membuka daftar secara manual ruangan apa yang kosong pada suatu tanggal
 
 ## 2. Rancangan struktur data
+```go
 type SumberDaya struct {
 	ID    int    `json:"id"`
 	Nama  string `json:"nama"`
@@ -22,18 +23,19 @@ type Peminjaman struct {
 	Status       string `json:"status"` 
 }
 
-type Storage struct {
-	mu               sync.Mutex
-	sumberDayaMap    map[int]SumberDaya
-	peminjamanMap    map[int]Peminjaman
-	nextSumberDayaID int
-	nextPeminID      int
+type Handler struct {
+	mu          sync.Mutex
+	sumberDaya  []SumberDaya
+	peminjaman  []Peminjaman
+	nextSDID    int
+	nextPeminID int
 }
+```
 
 ## 3. Satu keputusan desain
-* **Keputusan:** Menghitung sisa ketersediaan slot secara langsung (*on-the-fly*) dari data peminjaman saat endpoint dipanggil.
-* **Pilihan lain:** Membuat *map* memori terpisah khusus ketersediaan slot yang di-update setiap kali ada `POST`, `PUT`, atau `DELETE`.
-* **Alasan:** Menghindari risiko *bug* data tidak sinkron. Menghitung langsung dari sumber utama jauh lebih aman dan lebih cepat dikerjakan dalam waktu terbatas.
+* **Keputusan:** Menyimpan data in-memory langsung menggunakan slice pada struct `Handler` dan menghitung sisa ketersediaan slot secara langsung (*on-the-fly*) dari data peminjaman saat endpoint dipanggil.
+* **Pilihan lain:** Membuat abstraksi layer `Storage` terpisah berbasis `map[int]...` dengan tabel/map terpisah untuk kuota ketersediaan.
+* **Alasan:** Menyederhanakan struktur kode agar minim *boilerplate* dalam batas waktu pengerjaan 2.5 jam. Penggunaan slice membuat data otomatis terurut berdasarkan ID naik tanpa perlu algoritma sorting tambahan, serta menghindari risiko bug inkonsistensi data kuota.
 
 ## 4. Bug atau kendala (minimal dua)
 ### Bug 1
