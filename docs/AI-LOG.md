@@ -9,7 +9,17 @@ Log yang jujur tidak mengurangi nilai, sebanyak apa pun AI dipakai. Yang mengura
 - Dipakai: (bagian kode yang kamu ambil, misalnya nama fungsi dan file)
 - Diubah: (apa yang kamu ubah atau perbaiki dari hasil AI, dan kenapa)
 
-## (Entri berikutnya)
-- Prompt:
-- Dipakai:
-- Diubah:
+## Struktur projek
+- Prompt: tolong rancang struktur projek
+- Dipakai: file main, models, storage, utils
+- Diubah: blm ada rencana di ubah karena sesuai namun mungkin menghapus storage.go
+
+## Memberi konteks untuk Ai
+- prompt : aturan aturan yang ada di req.md
+- dipakai : kedepannya
+- diubah : models.go 
+
+## mengerjakan kebutuhan wajib B1 kelola sumber daya
+- prompt : aturan aturan yang ada di req.md
+- dipakai : file readme mengenai fitur B1
+- diubah : models definisi struct, handler menambah fungsi dan enpoint , main, storage auto increment id

@@ -7,15 +7,11 @@ import (
 )
 
 func main() {
-	storage := NewStorage()
-	handler := NewHandler(storage)
-
-	mux := http.NewServeMux()
-	handler.RegisterRoutes(mux)
+	handler := NewHandler()
 
 	port := ":8080"
 	fmt.Printf("Server PinjamKampus berjalan di http://localhost%s\n", port)
-	if err := http.ListenAndServe(port, mux); err != nil {
+	if err := http.ListenAndServe(port, handler); err != nil {
 		log.Fatalf("Gagal menjalankan server: %v", err)
 	}
 }
