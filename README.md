@@ -1,71 +1,19 @@
-# backend-nrp
+# PinjamKampus API
 
-Repo tugas mata kuliah **Pengembangan Backend Dasar**, dibuat dari template [`webdev-if-its/backend-template`](https://github.com/webdev-if-its/backend-template). Ganti judul di atas jadi nama repo kalian sendiri (`backend-nrp`, contoh: `backend-5025201012`).
+- Nama dan NRP: Kagendra Amadeo Reynara Pratista
+- Persona: A
+- Cara menjalankan: `go run .` lalu buka http://localhost:8080
 
-## Aturan Umum
+## Fitur
+- [ ] B1 Sumber daya
+- [ ] B2 Buat peminjaman
+- [ ] B3 Lihat peminjaman (daftar, filter, detail)
+- [ ] B4 Validasi dan error JSON
+- [ ] B5 Deteksi bentrok (409)
+- [ ] B6 Ubah dan hapus
+- [ ] B7 Aman untuk permintaan bersamaan
+- [ ] Fitur khas persona
+- [ ] Change request
 
-- Tugas tiap pertemuan disimpan di folder `pertemuan-XX/` pada repo ini.
-- Commit message wajib menyebut level yang dicapai: `pertemuan-XX: level N selesai`.
-- Deadline push: sebelum pertemuan berikutnya dimulai.
-- Semua level dicek otomatis lewat `go test` — baca `pertemuan-XX/SOAL.md` tiap minggu untuk detail levelnya.
-
-## Mengambil Pertemuan Baru Tiap Minggu
-
-Repo ini **tidak otomatis sinkron** dengan template dosen. Begitu ada pertemuan baru, jalankan (ganti `pertemuan-02` sesuai minggu berjalan):
-
-```bash
-git fetch https://github.com/webdev-if-its/backend-template.git main
-git checkout FETCH_HEAD -- pertemuan-02
-```
-
-Perintah ini **aman dijalankan kapan pun** — tidak akan menimpa folder pertemuan lain yang sudah kalian kerjakan, karena hanya mengambil folder yang disebutkan. Setelah itu, commit folder barunya seperti biasa.
-
-Kalau dosen memperbaiki sesuatu di pertemuan yang sudah dirilis (mis. ada bug di test), biasanya cukup ambil ulang file yang diperbaiki saja, bukan seluruh folder — akan diumumkan file mana yang berubah.
-
----
-
-Bagian di bawah ini **isi bertahap** sesuai level yang sedang kalian kerjakan (lihat `pertemuan-XX/SOAL.md` yang menyebutnya) — heading-nya dicek otomatis, jangan diganti namanya. Repo kalian dibuat dari template sekali di awal semester, jadi section README untuk pertemuan yang datang belakangan **tidak otomatis muncul** di repo kalian: kalau `SOAL.md` sebuah pertemuan meminta section baru, tambahkan sendiri heading-nya (`## ...` persis seperti yang disebut di soal) ke `README.md` repo kalian.
-
-## Identitas
-- Nama: (tulis di sini)
-- NRP: (tulis di sini)
-- Kelas: (tulis di sini)
-
-## Commit vs Push
-(tulis di sini)
-
-## Reproducibility
-(tulis di sini)
-
-## Catatan Merge Conflict
-(tulis di sini)
-
-## Kenapa .gitignore Penting
-(tulis di sini)
-
-## Refleksi
-(tulis di sini)
-
-## Analisis Pertemuan 4
-(tulis di sini)
-
-## Analisis Pertemuan 5
-(tulis di sini)
-
-## Dokumentasi API Task Manager
-(tulis di sini)
-
-## Analisis Pertemuan 7
-(tulis di sini)
-
-## Analisis Pertemuan 9
-(tulis di sini)
-
-## Arsitektur Task Manager v5
-(tulis di sini)
-
-## Checklist Keamanan Task Manager v6
-(tulis di sini)
-
-## Refleksi Topik Lanjutan
-(tulis di sini)
+## Yang belum selesai
+(Tulis jujur bagian mana yang belum berjalan.)
